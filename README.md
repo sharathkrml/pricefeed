@@ -14,6 +14,15 @@ Foundry consists of:
 https://book.getfoundry.sh/
 
 ## Usage
+### Create
+
+```shell
+$ forge init .
+```
+### Install chainlink-brownie
+```shell
+$ forge install smartcontractkit/chainlink-brownie-contracts --no-commit
+```
 
 ### Build
 
