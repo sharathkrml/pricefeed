@@ -27,7 +27,26 @@ contract BankTest is Test {
     // }
 
     function test_getEquivalentWei() public view {
-        int256 weth = bank.getEquivalentWeiForUSD(342278119000);
+        uint256 weth = bank.getEquivalentWeiForUSD(342278119000);
         assertEq(weth, 10 ** 8 * 10 ** 18);
     }
+
+    function test_depositAndBalanceOf() public {
+        uint256 prevBalance = address(this).balance;
+        bank.deposit{value: 100}();
+        assertEq(bank.balanceOf(address(this)), 100);
+        assertEq(address(this).balance, prevBalance - 100);
+    }
+
+    function test_withdraw() public {
+        uint256 depositAmount = (10 ** 8 * 10 ** 18) + 1;
+        bank.deposit{value: depositAmount}();
+        uint256 prevBalance = address(this).balance;
+        bank.withdraw(342278119000);
+        assertEq(address(this).balance, prevBalance + depositAmount - 1);
+    }
+
+    fallback() external payable {}
+
+    receive() external payable {}
 }

@@ -43,6 +43,7 @@ contract Bank {
         if (s_accounts[msg.sender] < _amount) {
             revert Bank__InsufficientBalance();
         }
+
         s_accounts[msg.sender] -= _amount;
         (bool success,) = msg.sender.call{value: _amount}("");
         if (!success) {
@@ -55,6 +56,7 @@ contract Bank {
      * Price feed gives you price of (10^priceFeedDecimals) ether in USD
      * @return equivalent wei
      */
+
     function getEquivalentWeiForUSD(uint256 _amountInUSD) public view returns (uint256) {
         uint8 priceFeedDecimals = i_priceFeed.decimals();
         (, int256 price,,,) = i_priceFeed.latestRoundData();
